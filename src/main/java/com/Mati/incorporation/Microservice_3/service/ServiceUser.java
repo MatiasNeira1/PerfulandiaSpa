@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServiceUser {
@@ -27,17 +28,31 @@ public class ServiceUser {
         return repositoryUser.findAll();
     }
 
-    public ResponseEntity<ModelUser> getUser(@PathVariable int rut) {
-        for(ModelUser user :repositoryUser.findAll()){
-            if(user.getRut().equals(rut)){
-                return ResponseEntity.ok(user);
-            }
+    public Optional<ModelUser> getUser(@PathVariable Long rut) {
+        return repositoryUser.findById(rut);
 
-        }
-        return ResponseEntity.notFound().build();
     }
 
-    //public ResponseEntity<ModelUser> updateUser(int rut)
+    public ResponseEntity<ModelUser> updateUser(Long rut, ModelUser updatedUser) {
+        return repositoryUser.findById(rut).map(user -> {
+            user.setNombre(updatedUser.getNombre());
+            user.setApellido(updatedUser.getApellido());
+            user.setCorreo(updatedUser.getCorreo());
+            user.setTelefono(updatedUser.getTelefono());
+            user.setDireccion(updatedUser.getDireccion());
+            user.setComuna(updatedUser.getComuna());
+            user.setProvincia(updatedUser.getProvincia());
+            user.setRegion(updatedUser.getRegion());
+
+            return ResponseEntity.ok(repositoryUser.save(user));
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
 
 }
+
+
+
+
+
 

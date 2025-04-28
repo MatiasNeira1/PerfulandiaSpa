@@ -23,9 +23,22 @@ public class ControllerUser {
         return ResponseEntity.ok(serviceUser.createUser(user));
     }
 
+    @GetMapping("/users")
+    public ResponseEntity <List<ModelUser>> getUsers(){
+        return ResponseEntity.ok(serviceUser.getUsers());
+    }
 
+    @GetMapping("/{rut}")
+    public ResponseEntity<ModelUser> getUser(@PathVariable Long rut) {
+        return serviceUser.getUser(rut)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
+    @PutMapping("/update/{rut}")
+    public ResponseEntity<ModelUser> Updateuser(@PathVariable Long rut,
+                                                @RequestBody ModelUser user){
+        return serviceUser.updateUser(rut, user);
+    }
 
 }
-
-
