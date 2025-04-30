@@ -25,7 +25,26 @@ public class ControllerUser {
 
 
 
+    @GetMapping("/users")
+    public ResponseEntity<List<ModelUser>> getAllUsers() {
+        return ResponseEntity.ok(serviceUser.getUsers());
+    }
 
+    @GetMapping("/{rut}")
+    public ResponseEntity<ModelUser> getUser(@PathVariable Long rut) {
+        return serviceUser.getUser(rut);
+    }
+    @PutMapping("/{rut}/update")
+    public ResponseEntity<ModelUser> updateUser(@PathVariable int rut, @RequestBody ModelUser user) {
+        return serviceUser.updateUser(rut, user);
+
+    }
+
+    @DeleteMapping("/delete/{rut}")
+    public ResponseEntity<ModelUser> deleteUser(@PathVariable Long rut) {
+        serviceUser.deleteUser(rut);
+        return ResponseEntity.ok().build();
+    }
 }
 
 
