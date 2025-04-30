@@ -23,8 +23,19 @@ public class ControllerUser {
         return ResponseEntity.ok(serviceUser.createUser(user));
     }
 
+    @GetMapping("/users")
+    public ResponseEntity <List<ModelUser>> getUsers(){
+        return ResponseEntity.ok(serviceUser.getUsers());
+    }
 
+    @GetMapping("/{rut}")
+    public ResponseEntity<ModelUser> getUser(@PathVariable Long rut) {
+        return serviceUser.getUser(rut)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
+<<<<<<< HEAD
     @GetMapping("/users")
     public ResponseEntity<List<ModelUser>> getAllUsers() {
         return ResponseEntity.ok(serviceUser.getUsers());
@@ -48,3 +59,12 @@ public class ControllerUser {
 }
 
 
+=======
+    @PutMapping("/update/{rut}")
+    public ResponseEntity<ModelUser> Updateuser(@PathVariable Long rut,
+                                                @RequestBody ModelUser user){
+        return serviceUser.updateUser(rut, user);
+    }
+
+}
+>>>>>>> 12a69b1313ebeef35b40dd691a2c1382144cede9

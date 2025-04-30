@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServiceUser {
@@ -28,6 +29,7 @@ public class ServiceUser {
         return repositoryUser.findAll();
     }
 
+<<<<<<< HEAD
     public ResponseEntity<ModelUser> getUser(@PathVariable Long rut) {
         return repositoryUser.findById(rut).map(user-> ResponseEntity.ok(user)).
                 orElse(ResponseEntity.notFound().build());
@@ -64,10 +66,37 @@ public class ServiceUser {
         return ResponseEntity.notFound().build();
     }
 
+=======
+    public Optional<ModelUser> getUser(@PathVariable Long rut) {
+        return repositoryUser.findById(rut);
+
+    }
+
+    public ResponseEntity<ModelUser> updateUser(Long rut, ModelUser updatedUser) {
+        return repositoryUser.findById(rut).map(user -> {
+            user.setNombre(updatedUser.getNombre());
+            user.setApellido(updatedUser.getApellido());
+            user.setCorreo(updatedUser.getCorreo());
+            user.setTelefono(updatedUser.getTelefono());
+            user.setDireccion(updatedUser.getDireccion());
+            user.setComuna(updatedUser.getComuna());
+            user.setProvincia(updatedUser.getProvincia());
+            user.setRegion(updatedUser.getRegion());
+
+            return ResponseEntity.ok(repositoryUser.save(user));
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
+>>>>>>> 12a69b1313ebeef35b40dd691a2c1382144cede9
 
 
 
     }
+
+
+
+
+
 
 
 
