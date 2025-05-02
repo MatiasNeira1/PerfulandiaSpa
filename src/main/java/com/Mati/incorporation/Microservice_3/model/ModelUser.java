@@ -28,4 +28,5 @@ public class ModelUser {
     private String comuna;
     private String provincia;
     private String region;
+
 }
